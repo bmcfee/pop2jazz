@@ -37,9 +37,9 @@ def note_frames(y, sr, hop_length, onsets, max_notes):
     events = []
     
     for i, (s, t) in enumerate(zip(times[:-1], times[1:])):
-        events.append([s, t, zip(idx[:, i] + 12, CQT[idx[:, i], i])])
+        events.append([s, t, filter(lambda x: x[-1] > -40.0, zip(idx[:, i] + 12, event_notes[idx[:, i], i]))])
     
-    return events
+    return filter(lambda x: x[-1], events)
 
 
 def process_arguments(args):
